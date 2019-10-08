@@ -1,7 +1,8 @@
 {
-  "name": "app2",
+  "name": "stericloud",
   "version": "1.0.0",
   "description": "hygene dispencer app",
+  "engines": { "node": "10.16.0" },
   "author": "chris",
   "private": true,
   "scripts": {
