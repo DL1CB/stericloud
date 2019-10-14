@@ -12,7 +12,8 @@
     "dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server",
     "build": "nuxt build",
     "start": "cross-env NODE_ENV=production node server/index.js",
-    "generate": "nuxt generate"
+    "generate": "nuxt generate",
+    "heroku-postbuild": "npm run build"
   },
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^5.8.2",
@@ -41,6 +42,7 @@
     "vue-chartjs": "^3.4.2",
     "vue-server-renderer": "^2.6.10",
     "vue-slider-component": "^3.0.31",
+    "vue-swatches": "^1.0.4",
     "vue-template-compiler": "^2.6.10"
   },
   "devDependencies": {

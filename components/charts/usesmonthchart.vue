@@ -50,7 +50,7 @@ export default {
           data: [66,87,77,6,7,65,44,66,33,45]
         }
       ]
-    }, {responsive: true, maintainAspectRatio: false})
+    }, {responsive: true, maintainAspectRatio: true})
     
   }
 }

@@ -12,17 +12,22 @@
             </div>
         </div>    
 
-        <div v-if="onlinecount" class="p-2 text-center" v-b-tooltip.hover.bottom title="online">
+        <div v-if="onlinecount" class="p-2 text-center" v-b-tooltip.hover.bottom :title="onlinecount+' devices online'">
             <fa icon="wifi"  :style="{ color: 'rgba(0, 231, 255, 1)' }" />
             <animatednumber class="d-block" :value='onlinecount' :duration='500'  round='1'/>  
         </div>
 
-        <div v-if="offlinecount" class="p-2 text-center text-danger" v-b-tooltip.hover.bottom title="offline">
+        <div v-if="offlinecount" class="p-2 text-center text-danger" v-b-tooltip.hover.bottom :title="offlinecount+' devices offline'">
             <fa icon="wifi"/>
             <animatednumber class="d-block" :value='offlinecount' :duration='500'  round='1'/>  
         </div>
 
-        <div v-if="uses" class="p-2 text-center" v-b-tooltip.hover.bottom title="uses">
+        <div v-if="fluidlevel >= 0" class="p-2 text-center" v-b-tooltip.hover.bottom :title="fluidlevel+'% fluid level'">
+            <fa icon="tint" :style="{ color: 'rgba(0, 231, 255, 1)' }"/>
+            <animatednumber class="d-block"  :value='fluidlevel' :duration='500'  round='1'/>
+        </div>
+
+        <div v-if="uses" class="p-2 text-center" v-b-tooltip.hover.bottom :title="uses+' uses'">
             <fa-layers>
                <fa icon="tint" transform="shrink-6 right-2 up-4" :style="{ color: 'rgba(0, 231, 255, 1)' }"/>
                <fa icon="hands" />
@@ -30,12 +35,12 @@
             <animatednumber class="d-block" :value='uses' :duration='500'  round='1'/>
         </div>
 
-        <div v-if="passersby" class="p-2 text-center" v-b-tooltip.hover.bottom title="passers by">
+        <div v-if="passersby" class="p-2 text-center" v-b-tooltip.hover.bottom :title="passersby+' passers by'">
             <fa icon="walking" />
             <animatednumber class="d-block" :value='passersby' :duration='500'  round='1'/>
         </div>
 
-        <div v-if="batterylevel" class="p-2 text-center" v-b-tooltip.hover.bottom :title="'battery level ' +batterylevel +'%'+ chargingtext">
+        <div v-if="batterylevel >= 0" class="p-2 text-center" v-b-tooltip.hover.bottom :title="'battery level ' +batterylevel +'%'+ chargingtext">
              <fa-layers v-if="charging">
                 <fa icon="car-battery" transform="left-8"  /> 
                 <fa icon="plug" transform="right-8"/>
@@ -49,7 +54,7 @@
             </div>
         </div>  
 
-        <div v-if="servicein" class="p-2 text-center" v-b-tooltip.hover.bottom title="service in 27 days">
+        <div v-if="servicein >= 0" class="p-2 text-center" v-b-tooltip.hover.bottom :title="servicein + ' days to service'">
             <fa icon="tools" />
             <animatednumber class="d-block" :value='servicein' :duration='500'  round='1'/>  
         </div>
@@ -65,6 +70,7 @@
         <div v-if="signalstrength >= 0">
           <div v-if="signalstrength" class="p-2 text-center" v-b-tooltip.hover.bottom :title="signalstrength+ '% signal strength'">
               <fa icon="wifi" :style="{ color: 'rgba(0, 231, 255, 1)' }"/>
+              <animatednumber class="d-block" :value='signalstrength' :duration='500'  round='1'/>
           </div>
           <div v-else class="p-2 text-center text-danger" v-b-tooltip.hover.bottom title="offline">
               <fa icon="wifi"/>
@@ -77,6 +83,7 @@
 import animatednumber from 'animated-number-vue'
 export default {
   props: {
+
     devicecount: {
       type: Number,
       default: 0
@@ -89,6 +96,10 @@ export default {
       type: Number,
       default: 0
     },
+    fluidlevel: {
+      type: Number,
+      default: -1
+    },
     uses: {
       type: Number,
       default: 0
@@ -99,7 +110,7 @@ export default {
     },
     batterylevel: {
       type: Number,
-      default: 0
+      default: -1
     },
     charging: {
       type: Boolean,
@@ -107,7 +118,7 @@ export default {
     },
     servicein: {
       type: Number,
-      default: 0
+      default: -1
     },
     contractexpired: {
       type: Boolean,

@@ -48,7 +48,7 @@ export default {
           data: [,,,,,,,,,60,55,50,43,30,20,10,5,0]
         }
       ]
-    }, {responsive: true, maintainAspectRatio: false})
+    }, {responsive: true, maintainAspectRatio: true})
     
   }
 }

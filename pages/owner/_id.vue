@@ -1,36 +1,31 @@
 <template>
-  <section class="container">
-
-    <div class="content-fluid">
-      <ownerheadercard :ownername='owner.name'/>
-    </div>
- 
-      <b-card-group class="mt-3" deck >
-        <nuxt-link tag="div" :to='"/device/"+device.id' v-for="device in owner.devices" v-bind:key="device.id"  >
-          <devicecard class="h-100" :device='device'/>
-        </nuxt-link>
-      </b-card-group>
-   
-   </section>
+  <b-container >
+    <h1 class="display-5">{{owner.name}}</h1>
+    <devicestatssmall :devicecount='8' :onlinecount='6' :offlinecount='2' :uses='234' :passersby='1066' :contractexpired='true'/>
+    <devices/>
+  </b-container>
 </template>
 
 <script>
 
-import ownerheadercard from '@/components/cards/ownerheadercard'
-import devicecard from '@/components/cards/devicecard'
+import devicestatssmall from '@/components/widgets/devicestatssmall'
+import devices from '@/components/devices'
 
 export default {
+  created: function(){
+     this.$store.dispatch('owner/fetchowner', this.$route.params.id )
+  },
   computed: {
     owner() {
       return this.$store.getters['owner/owner']
     }
   },
   mounted: function(){
-     this.$store.dispatch('owner/fetchowner', this.$route.params.id )
+     //this.$store.dispatch('owner/fetchowner', this.$route.params.id )
   },
   components: {
-    ownerheadercard,
-    devicecard
+    devicestatssmall,
+    devices
   }
 }
 </script>

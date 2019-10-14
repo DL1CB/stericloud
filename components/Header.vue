@@ -4,13 +4,22 @@
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     
+
       
       <router-link tag="div" class="navbar-brand" to="/" exact>
         <fa v-if="isNothome" class="d-inline ml-2" icon="home" />
       </router-link>
 
       <div class="collapse navbar-collapse justify-content-end">
+
         <ul class="navbar-nav">
+
+        <li> 
+          <a href="#" class="nav-link">
+            <fa icon="arrow" />
+          </a>
+        </li>
+
           <li v-if="username">
             <a href="#" class="nav-link">
               Hello {{ username }}
