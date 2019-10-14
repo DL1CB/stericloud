@@ -6,7 +6,38 @@
         <b-card> <!-- overlay img-src="https://picsum.photos/1024/480/?image=1001&blur=5"-->
           <b-card-body>
 
-          <b-row class="p-0">
+          <b-row  class="p-0">
+
+            <b-col v-if="item.location" lg="3" md="4" sm="6" xs="12" class="align-items-center">
+              <div class="my-2 h-100 p-4 text-center shadow" style="background-color: rgba(255, 255, 255, 0.2)">
+               
+                <h2 class="text-center">
+                      {{item.owner.name}}
+                </h2>
+                <p>{{formataddress(item.owner.location)}}</p>
+                 <h3>{{item.name}}</h3>
+                 <p class="text-center">
+                      {{item.location.indoorname}}
+                </p>
+               </div>
+            </b-col>
+
+            <b-col v-if="item.location" lg="3" md="4" sm="6" xs="12" class="align-items-center">
+              <div class="my-2 h-100 p-4 text-center shadow" style="background-color: rgba(255, 255, 255, 0.2)">
+                  <no-ssr>
+                  <l-map style="height: 10rem; width: 100%" :zoom=14 :center="[item.location.north, item.location.east]">
+                    <l-tile-layer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"></l-tile-layer>
+                    <l-marker :lat-lng="[item.location.north, item.location.east]" >
+                      <l-popup class="text-center" :open="true">
+                        {{formataddress(item.owner.location)}} <br/> {{item.location.indoorname}}
+                      </l-popup>
+            
+                      </l-marker>
+                  </l-map>
+                </no-ssr>
+              </div>
+            </b-col>
+
             <b-col lg="3" md="4" sm="6" xs="12" class="align-items-center">
               <div class="my-2 h-100 p-4 text-center shadow" style="background-color: rgba(255, 255, 255, 0.2)">
                 <h3>Fluid</h3>
@@ -51,9 +82,9 @@
                  <br/>
                 <h2 class="text-center">
                   <animatednumber class="h2" :value='current.batterylevel' :duration='500' :delay='100' round='1'/>%
+                  <fa v-if="hygeneindextrend > 0" class="d-inline" icon="chevron-up"/>
+                  <fa v-if="hygeneindextrend < 0" class="d-inline" icon="chevron-down"/>
                 </h2>
-                <fa v-if="hygeneindextrend > 0" class="d-inline" icon="chevron-up"/>
-                <fa v-if="hygeneindextrend < 0" class="d-inline" icon="chevron-down"/>
                 <p class="text-center">{{hygeneindexgoal || 0}}%<fa class="d-inline ml-1 mr-2" icon="carrot" /> | <fa class="d-inline ml-2 mr-1" icon="award" />{{hygeneindexrecord || 0}}%</p>
               </div>
             </b-col>  
@@ -200,11 +231,11 @@ export default {
     }
   },
   mounted: function(){
-     this.$store.dispatch('device/fetch', this.id)
+     //this.$store.dispatch('device/fetch', this.id)
   },
 
   methods: {
-    owneraddress(location) {
+    formataddress(location) {
       return location.street +' '+
              location.number +', '+
              location.city +' '+
@@ -222,4 +253,17 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.mapoverlay{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgb(0,170,170);
+  opacity:0;
+  transition:opacity 500ms ease-in-out;
+}
+</style>
 

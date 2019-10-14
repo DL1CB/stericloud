@@ -75,11 +75,14 @@ export const actions = {
           owner {
             name
             location {
+              indoorname
               street
               number
               city
               country
               postalcode
+              north
+              east
             }
           }
           location {
